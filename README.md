@@ -20,7 +20,7 @@ This project integrates Snort with the ELK Stack (Elasticsearch, Logstash, Kiban
 3. Send parsed events to Elasticsearch.
 4. Use Kibana to explore and visualize.
 
-See [docs/setup-guide.md](docs/setup-guide.md) for full steps.
+See [docs/SETUP.md](docs/SETUP.md) for full steps.
 
 ## Sample Dashboard
 
