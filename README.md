@@ -37,4 +37,4 @@ You can import `kibana/snort-dashboard.ndjson` into your Kibana instance.
 - Enable alerting via email or Slack
 
 ##  Author
-[Your Name](https://github.com/yourusername)
+[Your Name](https://github.com/Chinkhuselts)
