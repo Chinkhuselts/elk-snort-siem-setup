@@ -29,9 +29,6 @@ See [docs/setup-guide.md](docs/setup-guide.md) for full steps.
 ## Sample Logs
 See `sample-logs/alert_fast.txt` for sample alerts and test traffic.
 
-## Exported Kibana Dashboard
-You can import `kibana/snort-dashboard.ndjson` into your Kibana instance.
-
 ## Future Plans
 - Add Wazuh or OSSEC agent integration
 - Enable alerting via email or Slack
