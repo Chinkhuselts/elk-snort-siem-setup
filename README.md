@@ -34,4 +34,4 @@ See `sample-logs/alert_fast.txt` for sample alerts and test traffic.
 - Enable alerting via email or Slack
 
 ##  Author
-[Your Name](https://github.com/yourusername)
+[Chinkhuselts](https://github.com/Chinkhuselts)
