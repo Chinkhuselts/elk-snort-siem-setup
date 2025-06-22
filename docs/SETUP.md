@@ -21,54 +21,53 @@ This guide walks through the installation and integration of Snort with the ELK 
 sudo apt update
 sudo apt install elasticsearch
 sudo systemctl enable --now elasticsearch
-
+```
 ### Install Logstash
-
+```
 sudo apt install logstash
 sudo systemctl enable --now logstash
-
+```
 ## Install Kibana
-
+```
 sudo apt install kibana
 sudo systemctl enable --now kibana
-
+```
 Visit Kibana: http://localhost:5601
 ## 3. Install Snort
-
+```
 sudo apt install snort
-
+```
 Configure interface and rules in /etc/snort/snort.conf.
 
 ### Run Snort:
-
+```
 sudo snort -c /etc/snort/snort.conf -i eth0 -A fast -l /var/log/snort
-
+```
 ## 4. Configure Logstash for Snort
 
 Edit or create a pipeline config: logstash/snort.conf
 
 Example input/output/filter:
-
-input {
-  file {
-    path => "/var/log/snort/alert_fast.txt"
-    start_position => "beginning"
-  }
-}
-
+```
 filter {
   grok {
-    match => { "message" => "\[\*\*\] \[%{DATA:snort_id}\] %{DATA:alert_msg} \[\*\*\]" }
+    match => {
+      "message" => [
+        "^%{MONTHNUM}/%{MONTHNUM}-%{TIME:time}  \\[\\*\\*\\] \\[%{DATA:sid}\\] %{DATA:description} \\[\\*\\*\\] \\[Classification: %{GREEDYDATA:classification}\\] \\[Priority: %{INT:priority}\\] \\{%{WORD:proto}\\} %{IP:src_ip}:%{INT:src_port} -> %{IP:dst_ip}:%{INT:dst_port}$",
+        "^%{MONTHNUM}/%{MONTHNUM}-%{TIME:time}  \\[\\*\\*\\] \\[%{DATA:sid}\\] %{DATA:description} \\[\\*\\*\\] \\[Classification: %{GREEDYDATA:classification}\\] \\[Priority: %{INT:priority}\\] \\{%{WORD:proto}\\} %{IP:src_ip} -> %{IP:dst_ip}$"
+      ]
+    }
+  }
+  mutate {
+    add_field => { "date" => "2025" } # Set your year manually or with another filter
+    add_field => { "timestamp_full" => "%{date}-%{time}" }
+  }
+  date {
+    match => [ "timestamp_full", "YYYY-MM-dd HH:mm:ss.SSSSSS" ]
+    target => "@timestamp"
   }
 }
-
-output {
-  elasticsearch {
-    hosts => ["localhost:9200"]
-    index => "snort-alerts"
-  }
-}
-
+```
 Enable pipeline in /etc/logstash/pipelines.yml.
 
 ## 5. Test It
