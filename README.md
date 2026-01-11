@@ -24,8 +24,8 @@ See [docs/setup-guide.md](docs/setup-guide.md) for full steps.
 
 ## Sample Dashboard
 
-![Dashboard Screenshot](architecture-diagram.png)
-
+![Diagram](architecture-diagram.png)
+![Dashboard Screenshot](kibana/Snort-Dashboard.png)
 ## Sample Logs
 See `sample-logs/alert_fast.txt` for sample alerts and test traffic.
 
